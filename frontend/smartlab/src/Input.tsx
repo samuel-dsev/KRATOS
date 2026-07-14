@@ -1,13 +1,13 @@
 interface InputProps {
-  texto: string;
-  setTexto: React.Dispatch<React.SetStateAction<string>>;
+  text: string;
+  setText: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function Input({ texto, setTexto }: InputProps) {
+function Input({ text, setText }: InputProps) {
   return (
     <input
-      value={texto}
-      onChange={(e) => setTexto(e.target.value)}
+      value={text}
+      onChange={(e) => setText(e.target.value)}
     />
   );
 }

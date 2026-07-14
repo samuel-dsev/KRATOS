@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-interface botaoExibirProps {
-  lista: string[]
-  excluir: (index: number) => void;
+interface ShowButtonProps {
+  list: string[]
+  deleteButton: (index: number) => void;
 }
 
-function BotaoExibir({ lista, excluir }: botaoExibirProps) {
+function ShowButton({ list, deleteButton }: ShowButtonProps) {
   const [exibir, setExibir] = useState(false)
   const handleToggle = () => {
     setExibir(!exibir);
@@ -19,12 +19,12 @@ function BotaoExibir({ lista, excluir }: botaoExibirProps) {
       </button>
       {exibir &&
       (<ul>
-            {lista.map((item, index) => (
-                <li key={index}>{item} <button onClick={() => excluir(index)}>Excluir</button> </li>
+            {list.map((item, index) => (
+                <li key={index}>{item} <button onClick={() => deleteButton(index)}>Excluir</button> </li>
             ))}
         </ul>)
       }
     </div>
   );
 }
-export default BotaoExibir;
+export default ShowButton;

@@ -1,39 +1,35 @@
 import { useState } from "react";
-import Input from "./Input";
-import Botao from "./Botao";
-import BotaoExibir from "./botaoExibir";
-import BotaoLimpar from "./botaoLimpar";
+import Input from "./input"
+import Button from "./sendButton";
+import ShowButton from "./showButton";
+import ClearButton from "./clearButton";
 
 function App() {
-  const [texto, setTexto] = useState("");
-  const [lista, setLista] = useState<string[]>([]);
+  const [text, setText] = useState("");
+  const [list, setList] = useState<string[]>([]);
 
-
-  function enviar() {
-    setLista([...lista, texto]);
-    setTexto("");
+  function send() {
+    setList([...list, text]);
+    setText("");
   }
-
-  function limpar() {
-    setLista([]);
+  function clear() {
+    setList([]);
   }
-
-  function botaoExcluir(index: number) {
-    setLista(listaAnterior =>
-      listaAnterior.filter((_, indiceAtual) => {
-        return indiceAtual !== index;
+  function deleteButton(index: number) {
+    setList(previousList =>
+      previousList.filter((_, currentIndex) => {
+        return currentIndex !== index;
   })
 );
   }
 
   return (
-    <>
-      <Input texto={texto} setTexto={setTexto} />
-      <Botao texto={texto} enviar={enviar} />
-      <br />
-      <BotaoLimpar limpar={limpar} />
-      <BotaoExibir lista={lista} excluir={botaoExcluir}/>
-    </>
+    <div className="app-card">
+      <Input text={text} setText={setText} />
+      <Button send={send} />
+      <ClearButton clear={clear} />
+      <ShowButton list={list} deleteButton={deleteButton}/>
+    </div>
   );
 }
 
