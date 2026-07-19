@@ -1,34 +1,42 @@
 import { useState } from "react";
-import Input from "./input"
-import Button from "./sendButton";
-import ShowButton from "./showButton";
-import ClearButton from "./clearButton";
+import { TodoItem } from "../src/types/todoItem";
+import Input from "../src/components/input";
+import SendButton from "../src/components/sendButton";
+import ShowButton from "../src/components/showButton";
+import ClearButton from "../src/components/clearButton";
 
 function App() {
   const [text, setText] = useState("");
-  const [list, setList] = useState<string[]>([]);
+  const [list, setList] = useState<TodoItem[]>([]);
+  const [nextId, setNextId] = useState(1);
 
   function send() {
-    setList([...list, text]);
-    setText("");
+    if (text.trim() !== "") {
+      setList([...list, {
+        id: nextId,
+        text
+      }]);
+      setNextId(nextId + 1)
+      setText("");
+    }
   }
+
+
   function clear() {
     setList([]);
   }
-  function deleteButton(index: number) {
+  function deleteItem(id: number) {
     setList(previousList =>
-      previousList.filter((_, currentIndex) => {
-        return currentIndex !== index;
-  })
+      previousList.filter(item => item.id !== id)
 );
   }
 
   return (
     <div className="app-card">
       <Input text={text} setText={setText} />
-      <Button send={send} />
+      <SendButton send={send} />
       <ClearButton clear={clear} />
-      <ShowButton list={list} deleteButton={deleteButton}/>
+      <ShowButton list={list} deleteItem={deleteItem}/>
     </div>
   );
 }

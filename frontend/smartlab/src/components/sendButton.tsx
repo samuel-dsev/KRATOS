@@ -2,7 +2,7 @@ interface SendButtonProps {
   send: () => void;
 }
 
-function sendButton({ send }: SendButtonProps) {
+function SendButton({ send }: SendButtonProps) {
   return (
     <button onClick={send}>
       Enviar
@@ -10,4 +10,4 @@ function sendButton({ send }: SendButtonProps) {
   );
 }
 
-export default sendButton;
+export default SendButton;
