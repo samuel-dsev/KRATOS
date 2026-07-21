@@ -20,8 +20,6 @@ function App() {
       setText("");
     }
   }
-
-
   function clear() {
     setList([]);
   }

@@ -10,6 +10,13 @@ function ShowButton({ list, deleteItem }: ShowButtonProps) {
   const handleToggle = () => {
     setShowList(!showList);
   };
+  const [editingId, setEditingId] = useState<number | null>(null)
+  const [editingText, setEditingText] = useState("")
+
+  function startEdit(id: number, text: string) {
+    setEditingId(id)
+    setEditingText(text)
+  }
 
   return (
     <div>
@@ -19,7 +26,10 @@ function ShowButton({ list, deleteItem }: ShowButtonProps) {
       {showList &&
       (<ul>
             {list.map((todo) => (
-                <li key={todo.id}>{todo.text} <button onClick={() => deleteItem(todo.id)}>Excluir</button> </li>
+                <li key={todo.id}>{todo.id === editingId ? <input value={editingText} onChange={(e) => setEditingText(e.target.value)}></input> : todo.text  }
+                  <button onClick={() => deleteItem(todo.id)}>Excluir</button> 
+                  <button onClick={() => startEdit(todo.id, todo.text)}> Editar </button>                
+                </li>
             ))}
         </ul>)
       }
