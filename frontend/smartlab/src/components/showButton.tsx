@@ -1,23 +1,23 @@
 import { useState } from "react";
 import { TodoItem } from "../types/todoItem";
 interface ShowButtonProps {
+  saveEdit: (text: string) => void;
   list: TodoItem[];
   deleteItem: (id: number) => void;
+  editingId: number | null;
+  editingText: string;
+  setEditingId: (id: number | null) => void;
+  setEditingText: (text: string) => void;
 }
-
-function ShowButton({ list, deleteItem }: ShowButtonProps) {
+function ShowButton({ list, deleteItem, editingId, editingText, setEditingId, setEditingText }: ShowButtonProps) {
   const [showList, setShowList] = useState(false)
   const handleToggle = () => {
     setShowList(!showList);
   };
-  const [editingId, setEditingId] = useState<number | null>(null)
-  const [editingText, setEditingText] = useState("")
-
   function startEdit(id: number, text: string) {
     setEditingId(id)
     setEditingText(text)
   }
-
   return (
     <div>
       <button onClick={handleToggle}>
@@ -26,9 +26,13 @@ function ShowButton({ list, deleteItem }: ShowButtonProps) {
       {showList &&
       (<ul>
             {list.map((todo) => (
-                <li key={todo.id}>{todo.id === editingId ? <input value={editingText} onChange={(e) => setEditingText(e.target.value)}></input> : todo.text  }
+                <li key={todo.id}>
+                  {todo.id === editingId ? <input value={editingText} onChange={(e) => setEditingText(e.target.value)}></input> : todo.text  }
                   <button onClick={() => deleteItem(todo.id)}>Excluir</button> 
-                  <button onClick={() => startEdit(todo.id, todo.text)}> Editar </button>                
+
+                  <button onClick={() => startEdit(todo.id, todo.text)} 
+                    > Editar </button>     
+
                 </li>
             ))}
         </ul>)

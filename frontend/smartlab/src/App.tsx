@@ -9,7 +9,8 @@ function App() {
   const [text, setText] = useState("");
   const [list, setList] = useState<TodoItem[]>([]);
   const [nextId, setNextId] = useState(1);
-
+  const [editingId, setEditingId] = useState<number | null>(null)
+  const [editingText, setEditingText] = useState("")
   function send() {
     if (text.trim() !== "") {
       setList([...list, {
@@ -28,15 +29,34 @@ function App() {
       previousList.filter(item => item.id !== id)
 );
   }
-
+  function saveEdit() {
+  setList(previousList =>
+    previousList.map(todo => {
+      if (todo.id === editingId) {
+        return({
+          ...todo, 
+            text: editingText
+        })
+      }
+      return todo;
+    })
+  );
+  setEditingId(null);
+  setEditingText("");
+}
   return (
     <div className="app-card">
       <Input text={text} setText={setText} />
       <SendButton send={send} />
       <ClearButton clear={clear} />
-      <ShowButton list={list} deleteItem={deleteItem}/>
+      <ShowButton list={list} 
+          saveEdit={saveEdit}
+          deleteItem={deleteItem} 
+          editingId={editingId}
+          editingText={editingText}
+          setEditingId={setEditingId}
+          setEditingText={setEditingText} />
     </div>
   );
 }
-
 export default App;
